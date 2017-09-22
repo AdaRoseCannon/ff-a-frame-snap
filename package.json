@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "postinstall": "wget https://download.mozilla.org/?product=firefox-56.0b12-SSL&os=linux64&lang=en-US; ",
     "express": "^4.15.4",
     "geckodriver": "^1.8.1",
     "selenium-webdriver": "^3.5.0"
