@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "PATH=node_modules/geckodriver/:$PATH node ./index.js",
-    "xxxx-postinstall": "wget --output-document=firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-56.0b12-SSL&os=linux64&lang=en-GB'; tar -xvjf firefox.tar.bz2"
+    "postinstall": "wget --output-document=firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-56.0b12-SSL&os=linux64&lang=en-GB'; tar -xvjf firefox.tar.bz2"
   },
   "keywords": [],
   "author": "",
