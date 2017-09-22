@@ -6,7 +6,7 @@ const fs = require('fs');
 promise.USE_PROMISE_MANAGER = false;
 
 const binary = new firefox.Binary(__dirname + '/firefox/firefox');
-// binary.addArguments("--headless");
+binary.addArguments("--headless");
 
 const snapPath = __dirname + '/snaps/' + Date.now() + '/';
 fs.mkdirSync(snapPath);
@@ -31,6 +31,8 @@ async function snap(url) {
 	console.log('Loading URL:', url);
 
 	await driver.get(url);
+
+	console.log('Page loaded, waiting for a-frame.');
 
 	await driver.wait(async () => {
 		const readyState = await driver.executeScript('return document.querySelector("a-scene").hasLoaded');
