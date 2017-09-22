@@ -10,6 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engine": "7.10.0",
   "dependencies": {
     "express": "^4.15.4",
     "geckodriver": "^1.8.1",
