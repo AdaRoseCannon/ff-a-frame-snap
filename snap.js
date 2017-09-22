@@ -5,7 +5,7 @@ const firefox = require('selenium-webdriver/firefox');
 const fs = require('fs');
 promise.USE_PROMISE_MANAGER = false;
 
-const binary = new firefox.Binary('/home/SERILOCAL/ada.edwards/bin/firefox/firefox');
+const binary = new firefox.Binary(__dirname + '/firefox/firefox');
 // binary.addArguments("--headless");
 
 async function snap(url) {
