@@ -1,0 +1,16 @@
+{
+  "name": "ff-a-frame-snap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "PATH=node_modules/geckodriver/:$PATH node ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geckodriver": "^1.8.1",
+    "selenium-webdriver": "^3.5.0"
+  }
+}
