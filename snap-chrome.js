@@ -27,21 +27,19 @@ async function snap(url) {
 
 	await driver.get(url);
 
-	console.log('Page loaded');
-
 	if (await driver.executeScript('return !document.querySelector("a-scene")')) throw Error('<a-scene> not found.');
+	
+	await driver.wait(() => driver.executeScript('return !!(document.querySelector("a-scene") || {}).hasLoaded'), 5000, 'Scene took too long to load.');
+	
+	console.log('Page loaded, Waiting for first render.')
 
-	await driver.wait(driver.executeScript('return !!(document.querySelector("a-scene") || {}).hasLoaded'), 5000, 'Scene took too long to load.');
-
-	console.log('a-frame loaded, running for 7s');
-
-	await new Promise(resolve => setTimeout(resolve, 7000));
+	await driver.wait(() => driver.executeScript('return !!(document.querySelector("a-scene") || {}).renderStarted'), 15000, 'Scene took too long to render.');
 
 	const files = fs.readdirSync(snapPath);
 
 	console.log('Trigger Screenshot', url);
 
-	await driver.executeScript('requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector("a-scene").components.screenshot.capture("equirectangular")))');
+	await driver.executeScript('document.querySelector("a-scene").components.screenshot.capture("equirectangular")');
 	
 	console.log('Waiting for files', url);
 	
