@@ -1,5 +1,5 @@
 const express = require('express');
-const snap = require('./snap');
+const snap = require('./snap-chrome');
 
 const app = express();
 
