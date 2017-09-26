@@ -1,25 +1,9 @@
-const { writeFileSync } = require('fs');
-const { promisify } = require('util');
-const { Builder, By, Key, promise, until } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
 const fs = require('fs');
-promise.USE_PROMISE_MANAGER = false;
 
 const snapPath = __dirname + '/snaps/' + Date.now() + '/';
 fs.mkdirSync(snapPath);
 
-const options = new chrome.Options();
-options.setChromeBinaryPath();
-options.addArguments("no-first-run", "use-gl=osmesa");
-options.setUserPreferences({
-	"profile.default_content_settings.popups": 0,
-	"download.default_directory": snapPath
-});
-
-const driver = new Builder()
-.forBrowser('chrome')
-.setChromeOptions(options)
-.build();
+const driver = require('./browser/chrome')(snapPath);
 
 async function snap(url) {
 
@@ -33,7 +17,7 @@ async function snap(url) {
 	
 	console.log('Page loaded, Waiting for first render.')
 
-	await driver.wait(() => driver.executeScript('return !!(document.querySelector("a-scene") || {}).renderStarted'), 15000, 'Scene took too long to render.');
+	await driver.wait(() => driver.executeScript('return !!(document.querySelector("a-scene") || {}).renderStarted'), 150000, 'Scene took too long to render.');
 
 	const files = fs.readdirSync(snapPath);
 
