@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "PATH=node_modules/geckodriver/:$PATH node ./index.js",
-    "postinstall": "wget --output-document=firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-56.0b12-SSL&os=linux64&lang=en-GB'; tar -xvjf firefox.tar.bz2"
+    "postinstall": "wget --output-document=firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US'; tar -xvjf firefox.tar.bz2; rm firefox.tar.bz2"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "engines": {
-	  "node": "8.x"
+    "node": "8.x"
   },
   "dependencies": {
     "express": "^4.15.4",

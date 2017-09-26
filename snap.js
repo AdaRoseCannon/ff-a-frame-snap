@@ -6,7 +6,7 @@ const fs = require('fs');
 promise.USE_PROMISE_MANAGER = false;
 
 const binary = new firefox.Binary(__dirname + '/firefox/firefox');
-binary.addArguments("--headless");
+// binary.addArguments("--headless");
 
 const snapPath = __dirname + '/snaps/' + Date.now() + '/';
 fs.mkdirSync(snapPath);
@@ -26,20 +26,21 @@ const driver = new Builder()
 .setFirefoxOptions(options)
 .build();
 
+const $ = driver.$;
+
 async function snap(url) {
 
 	console.log('Loading URL:', url);
 
 	await driver.get(url);
 
-	console.log('Page loaded, waiting for a-frame.');
+	console.log('Page loaded, waiting 3s for a-frame to load.');
 
-	await driver.wait(async () => {
-		const readyState = await driver.executeScript('return document.querySelector("a-scene").hasLoaded');
-		return readyState === true;
-	});
-	
-	console.log('Load Complete:', url);
+	if (await driver.executeScript('return !document.querySelector("a-scene")')) throw Error('<a-scene> not found.');
+
+	await driver.wait(driver.executeScript('return !!(document.querySelector("a-scene") || {}).hasLoaded'));
+
+	console.log('a-frame loaded, running for 3s');
 
 	await new Promise(resolve => setTimeout(resolve, 3000));
 

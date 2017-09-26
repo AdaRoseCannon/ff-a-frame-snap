@@ -16,7 +16,8 @@ app.get('/', function (req, res) {
 	.then(function (filepath) {
 		res.sendFile(filepath);
 	}).catch(e => {
-		res.end(e.message);	
+		console.log(e.message, e.stack)
+		res.end(e.message + '\n' + e.stack + '\n');	
 	});
 });
 
