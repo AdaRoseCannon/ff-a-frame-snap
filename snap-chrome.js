@@ -27,36 +27,49 @@ async function snap(url) {
 
 	await driver.get(url);
 
-	console.log('Page loaded, waiting 3s for a-frame to load.');
+	console.log('Page loaded');
 
 	if (await driver.executeScript('return !document.querySelector("a-scene")')) throw Error('<a-scene> not found.');
 
-	await driver.wait(driver.executeScript('return !!(document.querySelector("a-scene") || {}).hasLoaded'));
+	await driver.wait(driver.executeScript('return !!(document.querySelector("a-scene") || {}).hasLoaded'), 5000, 'Scene took too long to load.');
 
-	console.log('a-frame loaded, running for 3s');
+	console.log('a-frame loaded, running for 7s');
 
-	await new Promise(resolve => setTimeout(resolve, 3000));
+	await new Promise(resolve => setTimeout(resolve, 7000));
 
 	const files = fs.readdirSync(snapPath);
 
-	console.log('Trigger Screenshot, waiting for files.', url);
+	console.log('Trigger Screenshot', url);
 
-	await driver.executeScript('document.querySelector("a-scene").components.screenshot.capture("equirectangular")');
+	await driver.executeScript('requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector("a-scene").components.screenshot.capture("equirectangular")))');
+	
+	console.log('Waiting for files', url);
 	
 	let newFiles;
 
-	let newFileName;
 	await driver.wait(() => {
 		newFiles = fs.readdirSync(snapPath);
 		if (newFiles.length === files.length) {
-			return;
-		} else {
-			newFileName = snapPath + newFiles.find(file => files.indexOf(file) === -1);
-
-			// still not done so wait.
-			if (newFileName.slice(-10) === 'crdownload') return false;
-			return true;
+			return new Promise(resolve => setTimeout(resolve(false), 500));
 		}
+		return true;
+	}, 10000, 'Screenshot should have been taken by now.');
+
+	console.log('Download started');
+
+	// Wait for the download to finish
+	let newFileName;
+	await driver.wait(() => {
+		newFiles = fs.readdirSync(snapPath);
+		newFileName = snapPath + newFiles.find(file => files.indexOf(file) === -1);
+
+		// still not done so wait.
+		if (newFileName.slice(-10) === 'crdownload') {
+			return new Promise(resolve => setTimeout(resolve(false), 500));
+		}
+
+		// done
+		return true;
 	});
 
 	console.log('File Made', url);
