@@ -7,7 +7,7 @@ module.exports = function (snapPath) {
 	
 	const options = new chrome.Options();
 	options.setChromeBinaryPath();
-	options.addArguments("no-first-run", "use-gl=osmesa");
+	options.addArguments("no-first-run", "use-gl=osmesa", "enable-webgl", "ignore-gpu-blacklist");
 	options.setUserPreferences({
 		"profile.default_content_settings.popups": 0,
 		"download.default_directory": snapPath
