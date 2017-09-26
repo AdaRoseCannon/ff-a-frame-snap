@@ -53,7 +53,7 @@ async function snap(url) {
 			return new Promise(resolve => setTimeout(resolve(false), 500));
 		}
 		return true;
-	}, 10000, 'Screenshot should have been taken by now.');
+	}, 60000, 'Screenshot should have been taken by now.');
 
 	console.log('Download started');
 
