@@ -3,7 +3,8 @@ const fs = require('fs');
 const snapPath = __dirname + '/snaps/' + Date.now() + '/';
 fs.mkdirSync(snapPath);
 
-const driver = require('./browser/chrome')(snapPath);
+// const driver = require('./browser/chrome')(snapPath);
+const driver = require('./browser/firefox')(snapPath);
 
 async function snap(url) {
 

@@ -5,7 +5,7 @@ const firefox = require('selenium-webdriver/firefox');
 module.exports = function (snapPath) {
 	promise.USE_PROMISE_MANAGER = false;
 
-	const binary = new firefox.Binary(__dirname + '/firefox/firefox');
+	const binary = new firefox.Binary('/home/SERILOCAL/ada.edwards/bin/firefox/firefox');
 	// binary.addArguments("--headless");
 
 	const profile = new firefox.Profile();
@@ -24,4 +24,6 @@ module.exports = function (snapPath) {
 	.forBrowser('firefox')
 	.setFirefoxOptions(options)
 	.build();
+
+	return driver;
 }
