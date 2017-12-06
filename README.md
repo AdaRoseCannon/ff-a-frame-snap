@@ -3,10 +3,10 @@ Service to Screenshot A-Frame Sites
 
 # Installation
 
+* requres node >7 to run
 * clone this repo
-* requres node 7
 * `npm install`
-* `npm run start` (An empty firefox instance will start for taking screenshots)
+* `npm run start` (An empty chrome instance will start ready for taking screenshots)
 * Open in your browser of choice http://localhost:3000/?url=https://earthy-course.glitch.me/
 
 It will take a 360 screenshot like this:
